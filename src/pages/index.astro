@@ -4,14 +4,14 @@ import Layout from '../layouts/Layout.astro';
 const modules = import.meta.glob('./design/**/*.{astro,md,mdx}', { eager: true });
 const pagePaths = Object.keys(modules);
 
-const toRoute = (filePath) => {
+const toRoute = (filePath: string): string => {
 	const withoutPrefix = filePath.replace(/^\.\/design\//, '/design/');
 	const withoutExt = withoutPrefix.replace(/\.(astro|md|mdx)$/, '');
 	return withoutExt.replace(/\/index$/, '');
 };
 
 const designPages = pagePaths.map(toRoute).sort((a, b) => a.localeCompare(b));
-const formatTitle = (href) => {
+const formatTitle = (href: string): string => {
 	const trimmed = href.replace(/^\/design\/?/, '').replace(/\/$/, '');
 	if (!trimmed) return 'Design Index';
 	return trimmed
@@ -33,7 +33,7 @@ const formatTitle = (href) => {
 					<p class="text-[0.65rem] uppercase tracking-[0.4em] text-slate-400">
 						Design Lab
 					</p>
-					<h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+					<h1 class="text-4xl tracking-tight sm:text-5xl">
 						Design Pages
 					</h1>
 					<p class="text-sm leading-relaxed text-slate-600">
