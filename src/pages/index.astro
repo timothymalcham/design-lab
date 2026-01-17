@@ -11,49 +11,70 @@ const toRoute = (filePath) => {
 };
 
 const designPages = pagePaths.map(toRoute).sort((a, b) => a.localeCompare(b));
+const formatTitle = (href) => {
+	const trimmed = href.replace(/^\/design\/?/, '').replace(/\/$/, '');
+	if (!trimmed) return 'Design Index';
+	return trimmed
+		.split('/')
+		.map((segment) =>
+			segment
+				.replace(/[-_]/g, ' ')
+				.replace(/^\w/, (letter) => letter.toUpperCase())
+		)
+		.join(' / ');
+};
 ---
 
 <Layout>
-	<main class="page">
-		<h1>Design Pages</h1>
-		{designPages.length ? (
-			<ul>
-				{designPages.map((href) => (
-					<li><a href={href}>{href}</a></li>
-				))}
-			</ul>
-		) : (
-			<p class="empty">No design pages yet.</p>
-		)}
+	<main class="min-h-screen bg-white text-slate-900">
+		<section class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+			<div class="grid items-start gap-12 lg:grid-cols-[minmax(0,320px)_1fr]">
+				<div class="space-y-6">
+					<p class="text-[0.65rem] uppercase tracking-[0.4em] text-slate-400">
+						Design Lab
+					</p>
+					<h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+						Design Pages
+					</h1>
+					<p class="text-sm leading-relaxed text-slate-600">
+						A structured index of experiments, studies, and live explorations in the
+						design system.
+					</p>
+					<div class="flex items-center gap-4 text-[0.65rem] uppercase tracking-[0.35em] text-slate-400">
+						<span>{designPages.length} pages</span>
+						<span class="h-px w-10 bg-slate-200" aria-hidden="true"></span>
+						<span>Index</span>
+					</div>
+				</div>
+				<div class="border-t border-slate-200 pt-10 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+					{designPages.length ? (
+						<ul class="space-y-8">
+							{designPages.map((href) => (
+								<li class="group">
+									<a
+										href={href}
+										class="flex items-baseline justify-between gap-6 border-b border-slate-200 pb-4 text-lg font-medium tracking-tight transition-colors group-hover:border-slate-900 sm:text-xl"
+									>
+										<span>{formatTitle(href)}</span>
+										<span class="text-[0.65rem] uppercase tracking-[0.35em] text-slate-400 group-hover:text-slate-900">
+											Open
+										</span>
+									</a>
+									<p class="mt-2 text-xs text-slate-400">{href}</p>
+								</li>
+							))}
+						</ul>
+					) : (
+						<div class="border border-dashed border-slate-200 px-6 py-8 text-sm text-slate-500">
+							<p class="text-base font-medium text-slate-700">No design pages yet.</p>
+							<p class="mt-2">
+								Add files in <span class="font-medium text-slate-900">src/pages/design</span>{' '}
+								to populate this index.
+							</p>
+						</div>
+					)}
+				</div>
+			</div>
+		</section>
 	</main>
 </Layout>
-
-<style>
-	.page {
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-		padding: 2rem;
-	}
-
-	.page h1 {
-		margin: 0 0 1rem;
-	}
-
-	.page ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	.page li + li {
-		margin-top: 0.5rem;
-	}
-
-	.page a {
-		color: inherit;
-		text-decoration: underline;
-	}
-
-	.empty {
-		color: #6b7280;
-	}
-</style>
