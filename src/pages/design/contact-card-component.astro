@@ -1,0 +1,99 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import headshot from '../../assets/headshot.jpg';
+import background from '../../assets/contact-card-background.jpg';
+
+const profile = {
+	name: 'Tim Malcham',
+	handle: '@tim_malcham',
+	website: 'https://unusualundertaking.com',
+	displayUrl: 'unusualundertaking.com',
+	email: "email@unusualundertaking.com"
+};
+---
+
+<Layout>
+	<main class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+		<!-- Background Image -->
+		<div class="absolute inset-0 z-0">
+			<img 
+				src={background.src} 
+				alt="" 
+				class="w-full h-full object-cover"
+			/>
+			<!-- Dark Overlay -->
+			<div class="absolute inset-0 z-0 bg-black/50"></div>
+		</div>
+
+		<!-- Card -->
+		<article class="relative z-10 w-full max-w-sm lg:max-w-3xl overflow-hidden border border-white/60 bg-white/90 shadow-2xl shadow-neutral-200/20 backdrop-blur-xl sm:p-0.5">
+			<!-- Grain Texture Overlay -->
+			<div class="grain pointer-events-none absolute inset-0"></div>
+			
+			<div class="relative grid items-start lg:grid-cols-[minmax(0,280px)_1fr]">
+				<!-- Left Column: Identity -->
+				<div class="space-y-8">	
+					<div class="relative aspect-4/5 w-full overflow-hidden bg-neutral-100 shadow-inner">
+						<img
+							src={headshot.src}
+							alt="Portrait of Tim Malcham"
+							class="h-full w-full object-cover"
+							loading="lazy"
+						/>
+					</div>
+				</div>
+
+				<!-- Right Column: Details -->
+				<div class="px-6 pt-10 pb-8 lg:pl-12 lg:pr-8 lg:pt-8">
+					<ul class="space-y-6">
+						<li class="space-y-1">
+							<p class="text-[0.65rem] uppercase tracking-[0.4em] text-neutral-500">
+								Contact
+							</p>
+							<h1 class="text-4xl text-neutral-900 sm:text-5xl">
+								{profile.name}
+							</h1>
+						</li>
+
+						<!-- Handle -->
+						<li class="space-y-1">
+							<p class="text-[0.65rem] uppercase tracking-[0.4em] text-neutral-500">
+								Handle
+							</p>
+							<span class="text-2xl tracking-tight text-neutral-900 sm:text-xl border-b border-neutral-500">
+								{profile.handle}
+							</span>
+						</li>
+
+						<!-- Website -->
+						<li class="space-y-1">
+							<p class="text-[0.65rem] uppercase tracking-[0.4em] text-neutral-500">
+								Website
+							</p>
+							<a href={profile.website} class="text-lg tracking-tight text-neutral-900 sm:text-xl border-b border-neutral-500">
+								{profile.displayUrl}
+							</a>
+						</li>
+
+						<!-- Email -->
+						<li class="space-y-1">
+							<p class="text-[0.65rem] uppercase tracking-[0.4em] text-neutral-500">
+								Email
+							</p>
+							<a href=`mailto:${profile.email}` class="text-lg tracking-tight text-neutral-900 sm:text-xl border-b border-neutral-500">
+								{profile.email}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</article>
+	</main>
+</Layout>
+
+<style>
+	.grain {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+		background-size: 200px 200px;
+	}
+</style>
